@@ -6,9 +6,6 @@ export default defineConfig({
 	schema: './src/db/schema.ts',
 	dialect: 'mysql',
 	dbCredentials: {
-		host: "localhost",
-		user: "root",
-		port: 3306,
-		database: "tornoland"
+		url: "mysql://root:vdTeBGfmnmQAJjfWFZSQYUEnlNRMYQlr@turntable.proxy.rlwy.net:15407/railway"
 	},
 });

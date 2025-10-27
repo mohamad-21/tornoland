@@ -4,14 +4,13 @@ import mysql from "mysql2/promise";
 import { usersTable, gamesTable, tournamentsTable } from "./schema";
 import { eq } from "drizzle-orm";
 
-const poolConnection = mysql.createPool({
-	host: "localhost",
-	user: "root",
-	database: "tornoland",
-});
+const globalForDb = global as unknown as { pool: ReturnType<typeof mysql.createPool> };
 
-export const db = drizzle({ client: poolConnection });
+const poolConnection = globalForDb.pool ?? mysql.createPool("mysql://root:vdTeBGfmnmQAJjfWFZSQYUEnlNRMYQlr@turntable.proxy.rlwy.net:15407/railway");
 
+if (process.env.NODE_ENV !== 'production') globalForDb.pool = poolConnection;
+
+export const db = drizzle(poolConnection);
 
 async function main() {
 	const user: typeof usersTable.$inferInsert[] = [
